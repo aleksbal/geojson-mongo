@@ -1,0 +1,23 @@
+# Use the latest Node.js slim image
+FROM node:20-slim
+
+# Set the working directory for the Node.js application
+WORKDIR /app
+
+# Copy application files
+COPY ./package.json /app/
+COPY ./server.js /app/
+COPY ./geojson-files/*.geojson /app/data/
+COPY ./import-geojson.sh /app/
+
+# Install Node.js dependencies
+RUN npm install
+
+# Ensure the import script is executable
+RUN chmod +x /app/import-geojson.sh
+
+# Expose the API port
+EXPOSE 3000
+
+# Start the Node.js API server
+CMD ["bash", "-c", "bash node /app/server.js"]

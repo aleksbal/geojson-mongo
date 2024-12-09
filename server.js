@@ -21,7 +21,7 @@ app.get('/api/search', async (req, res) => {
     const db = client.db(DATABASE_NAME);
     const collectionNames = await db.listCollections().toArray();
 
-    const results = [];
+    const features = [];
 
     // Search across all collections
     for (const { name: collectionName } of collectionNames) {
@@ -29,15 +29,23 @@ app.get('/api/search', async (req, res) => {
         .collection(collectionName)
         .find({ 'properties.NAME': { $regex: nameQuery, $options: 'i' } }) // Case-insensitive search
         .toArray();
-      results.push(...data);
+        features.push(...data);
     }
 
-    res.json(results);
+    // Wrap the result in a FeatureCollection
+    const featureCollection = {
+      type: "FeatureCollection",
+      features: features
+    };
+
+    res.json(featureCollection);
     await client.close();
+    
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`API server is running on http://localhost:${PORT}`);
