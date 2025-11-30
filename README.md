@@ -1,6 +1,6 @@
 # gejson-mongo
 
-Docker image with MongoDB as data repository, and Node.js as API server. On startup, it loads several preconfigured GeoJSON files into repository and serves data requests via API. The aim of this project is the demonstrate the ease of creating an application using freely avaliable components. 
+Docker image with MongoDB as data repository, and Node.js as API server. On startup, it loads several preconfigured GeoJSON files into repository and serves data requests via API.
 
 ## GeoJSON Resources
 - Historical landmarks: https://catalog.data.gov/dataset/historic-landmarks-73030/resource/dd17654e-a940-475a-aa1c-4b1534eec54b
